@@ -23,9 +23,9 @@ def clean_and_save_data(
     """
     data_dir_path = os.path.join('..', 'data')
     if df1_path is None:
-        df1_path = os.path.join(data_dir_path, 'df1.csv')
+        df1_path = os.path.join(data_dir_path, 'processed/df1.csv')
     if df2_path is None:
-        df2_path = os.path.join(data_dir_path, 'df2.csv')
+        df2_path = os.path.join(data_dir_path, 'processed/df2.csv')
 
     # Valid files
     data_files_path = [file
@@ -58,6 +58,7 @@ def clean_and_save_data(
     # Creating frame 1
     df1 = pd.DataFrame({'User': users,
                         'Title': titles,
+                        'Year': years,
                         'Rating': ratings})
 
     df1['Rating'] = (df1['Rating']
@@ -78,8 +79,8 @@ def clean_and_save_data(
     df2 = (df2
            .explode('Genre')
            .explode('Actor')
-           .drop_duplicates()
-           .reset_index(drop=True)
+           # .drop_duplicates()
+           # .reset_index(drop=True)
            )
 
     # Removing invalid behaviour of genre and actors
@@ -94,6 +95,10 @@ def clean_and_save_data(
                          )
     df2 = df2.astype(DF2_DTYPES)
 
+    # fix incorrect values from df2
+    df2 = df2.groupby(['Title', 'Year', 'Genre', 'Actor'])[['Avg_rating', 'Number_of_ratings']]\
+        .agg(lambda x: x.mode()[0]).reset_index()
+
     df1.to_csv(df1_path, index=False)
     df2.to_csv(df2_path, index=False)
 
@@ -107,7 +112,7 @@ def load_data(
     """
     Method loads csv files with processed data frames
     """
-    data_dir_path = os.path.join('..', 'data')
+    data_dir_path = os.path.join('..', 'data/processed')
     if df1_path is None:
         df1_path = os.path.join(data_dir_path, 'df1.csv')
     if df2_path is None:
