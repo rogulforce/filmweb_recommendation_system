@@ -30,7 +30,7 @@ class CFRecommender(BaseRecommender):
 
             # predict value for each movie in dataset.
             pred_list = []
-            for movie in range(1, len(df_movie.Title.unique())):
+            for movie in range(1, len(self.df_movie.Title.unique())):
                 rating = self.algo_SVD.predict(user, movie).est
                 pred_list.append([user, movie, rating])
 
