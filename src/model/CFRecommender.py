@@ -1,8 +1,10 @@
-import pandas as pd
 from typing import Union
-from surprise import KNNWithMeans, SVD, Dataset, Reader, accuracy
+
+import pandas as pd
+from surprise import SVD, Dataset, KNNWithMeans, Reader, accuracy
 
 from model.BaseRecommender import BaseRecommender
+
 
 class CFRecommender(BaseRecommender):
     def __init__(self, df_user, df_movie):

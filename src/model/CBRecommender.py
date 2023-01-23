@@ -1,9 +1,11 @@
-import pandas as pd
-import numpy as np
 from typing import Union
+
+import numpy as np
+import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
 from model.BaseRecommender import BaseRecommender
+
 
 class CBRecommender(BaseRecommender):
     def __init__(self, df_movie):
@@ -67,7 +69,8 @@ class CBRecommender(BaseRecommender):
         if n_recommendations == -1:
             n_recommendations = len(similarity_matrix)
 
-        tmp = (similarity_matrix
+        tmp = (
+            similarity_matrix
             # Take max across row
             .max(axis=1)
             # Sort in descending way
@@ -76,14 +79,13 @@ class CBRecommender(BaseRecommender):
         title = (
             tmp
             # Take n recommendations
-            .iloc[:n_recommendations]
-            .index.values
-            )
-        rating = (tmp
+            .iloc[:n_recommendations].index.values
+        )
+        rating = (
+            tmp
             # Take n recommendations
-            .iloc[:n_recommendations]
-            .array.to_numpy()
-            )
+            .iloc[:n_recommendations].array.to_numpy()
+        )
 
         for i in range(n_recommendations):
             yield title[i], rating[i]

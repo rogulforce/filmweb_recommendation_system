@@ -1,6 +1,7 @@
-import pandas as pd
-from typing import Union
 from abc import ABC
+from typing import Union
+
+import pandas as pd
 
 
 class BaseRecommender(ABC):

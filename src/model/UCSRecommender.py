@@ -1,7 +1,9 @@
-import pandas as pd
 from typing import Union
 
+import pandas as pd
+
 from model.BaseRecommender import BaseRecommender
+
 
 class UCSRecommender(BaseRecommender):
     """user cold start recommender. (For users with not many rated movies.)
@@ -26,7 +28,7 @@ class UCSRecommender(BaseRecommender):
         for user in df_user["User"].unique():
             recommendations_for_user = self.recommendation_table.head(
                 num_of_recomendations
-            )[["Title", "Avg_rating"]].rename(columns={"Avg_rating":"Rating"})
+            )[["Title", "Avg_rating"]].rename(columns={"Avg_rating": "Rating"})
             recommendations_for_user["User"] = user
             recommendations = pd.concat([recommendations, recommendations_for_user])
         return recommendations
