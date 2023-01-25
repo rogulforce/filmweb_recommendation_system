@@ -5,8 +5,8 @@ import pandas as pd
 
 
 class BaseRecommender(ABC):
-    def __init__(self, df_user: pd.DataFrame, df_movie: pd.DataFrame):
-        self.df_user = df_user
+    def __init__(self, df_movie: pd.DataFrame):
+        # self.df_user = df_user
         self.df_movie = df_movie
 
     """ Base abstract class for recommendation techniques."""

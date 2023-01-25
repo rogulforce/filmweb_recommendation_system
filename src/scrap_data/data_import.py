@@ -117,6 +117,7 @@ def load_data(
     """
     Method loads csv files with processed data frames
     """
+    # data_dir_path = os.path.join("data/processed")
     data_dir_path = os.path.join("..", "data/processed")
     if df1_path is None:
         df1_path = os.path.join(data_dir_path, "df1.csv")

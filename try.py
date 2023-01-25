@@ -1,10 +1,10 @@
 import pandas as pd
 df = pd.DataFrame(
     [
-        {"name": "a", "first":11, "second":4},
-        {"name": "b", "first":21, "second":3},
-        {"name": "c", "first":31, "second":2},
-        {"name": "d", "first":41, "second":1},
+        {"name": "a", "first":1, "second":1},
+        {"name": "b", "first":1, "second":2},
+        {"name": "c", "first":2, "second":1},
+        {"name": "d", "first":2, "second":2},
         ])
 
 df2 = pd.DataFrame(
@@ -15,9 +15,6 @@ df2 = pd.DataFrame(
         {"name": "b", "first":21, "second":3},
         ])
 
-# print(df.sort_values("first", ascending=False).sort_values("second", ascending=False))
-# print(df[df["first"] > 30].__len__())
 
-# print(df["first"]+ df2["first"])
-# df.add(df2)
-print(df["first"].add(df2["first"], fill_value=0))
+print(df[(df["first"] == 1) & (df["second"] == 1)])
+

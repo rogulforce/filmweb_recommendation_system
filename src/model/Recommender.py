@@ -47,33 +47,39 @@ class Recommender_trivial(BaseRecommender):
         return recommendations
 
 
-class Recommender_suspected(BaseRecommender):
+class Recommender(BaseRecommender):
     """Base abstract class for recommendation techniques."""
 
-    def __init__(self, df_user: pd.DataFrame, df_movie: pd.DataFrame):
-        super().__init__(df_user, df_movie)
+    def __init__(self, df_movie: pd.DataFrame):
+        super().__init__(df_movie)
         self.CB = CBRecommender(df_movie)
-        self.UCS = UCSRecommender(df_user, df_movie)
-        self.CF = CFRecommender(df_user, df_movie)
+        self.UCS = UCSRecommender(df_movie)
+        self.CF = CFRecommender(df_movie)
 
     def train(self, df_user: Union[pd.DataFrame, None], **kwargs):
         self.UCS.train(df_user, **kwargs)
         self.CF.train(df_user, **kwargs)
 
     def predict(self, df_user: pd.DataFrame, num_of_recomendations: int, **kwargs):
-        # little = kwargs["little"]
-        # CB_weight = kwargs["CB_weight"]
-        # UCS_weight = kwargs["UCS_weight"]
-        # CF_weight = kwargs["CF_weight"]
-        little = 10
-        CB_weight = 0.2
-        UCS_weight = 0.4
-        CF_weight = 0.4
-
+        little = kwargs["little"]
+        CB_weight = kwargs["CB_weight"]
+        UCS_weight = kwargs["UCS_weight"]
+        CF_weight = kwargs["CF_weight"]
+        if little is None:
+            little = 10
+        if CB_weight is None:
+            CB_weight = 0.27415096
+        if UCS_weight is None:
+            UCS_weight = 0.10017023
+        if CF_weight is None:
+            CF_weight = 1 - CB_weight - UCS_weight
+        assert 0 <= CB_weight and CB_weight <= 1
+        assert 0 <= UCS_weight and UCS_weight <= 1
+        assert 0 <= CF_weight and CF_weight <= 1
         recommendations = pd.DataFrame(columns=["User", "Title"])
         for user in df_user["User"].unique():
             if len(df_user[df_user["User"] == user]) < little:
-                recommendations_for_user = self.USC.predict(
+                recommendations_for_user = self.UCS.predict(
                     df_user[df_user["User"] == user], num_of_recomendations
                 )
             else:

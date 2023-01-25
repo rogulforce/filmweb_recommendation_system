@@ -7,8 +7,9 @@ from model.BaseRecommender import BaseRecommender
 
 
 class CFRecommender(BaseRecommender):
-    def __init__(self, df_user, df_movie):
-        super(CFRecommender, self).__init__(df_user, df_movie)
+    def __init__(self, df_movie):
+        # super(CFRecommender, self).__init__(df_user, df_movie)
+        super(CFRecommender, self).__init__(df_movie)
         self.algo_SVD = SVD()
         # rating scale
         # reader = Reader(rating_scale = (1,10))
