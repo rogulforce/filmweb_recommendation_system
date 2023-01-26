@@ -1,19 +1,15 @@
 from typing import Union
 
 import pandas as pd
-from surprise import SVD, Dataset, KNNWithMeans, Reader, accuracy
+from surprise import SVD, Dataset, Reader
 
 from model.BaseRecommender import BaseRecommender
 
 
 class CFRecommender(BaseRecommender):
     def __init__(self, df_movie):
-        # super(CFRecommender, self).__init__(df_user, df_movie)
         super(CFRecommender, self).__init__(df_movie)
         self.algo_SVD = SVD()
-        # rating scale
-        # reader = Reader(rating_scale = (1,10))
-        # self.rating_df = Dataset.load_from_df(df_user[['User','Title', 'Rating']], reader)
 
     def train(
         self, df_user: Union[pd.DataFrame, None], n_top_movies: int = 20, **kwargs

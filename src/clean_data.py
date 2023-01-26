@@ -1,4 +1,3 @@
-
 def clean_data(df_user, df_movie):
     df_movie = df_movie[df_movie["Avg_rating"] <= 10]
 
@@ -15,7 +14,9 @@ def clean_data(df_user, df_movie):
         how="left",
     )
 
-    df_user["Avg_user_rating_diff"] = df_user_temp["Rating"] - df_user_temp["Avg_rating"]
+    df_user["Avg_user_rating_diff"] = (
+        df_user_temp["Rating"] - df_user_temp["Avg_rating"]
+    )
 
     df_user = df_user.dropna()
     # Mapping users to numbers

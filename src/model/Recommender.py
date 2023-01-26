@@ -18,7 +18,6 @@ class Recommender_trivial(BaseRecommender):
         self.CF = CFRecommender(df_user, df_movie)
 
     def train(self, df_user: Union[pd.DataFrame, None], **kwargs):
-        # self.CB.train(df_user, **kwargs)
         self.UCS.train(df_user, **kwargs)
         self.CF.train(df_user, **kwargs)
 
